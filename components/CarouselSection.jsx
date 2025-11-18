@@ -7,7 +7,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 export default function CarouselSection({ className = '' }) {
   const slides = [
     {
-      src: '/binary-code-with-globe-laptop-computer.jpg',
+      src: '/igor-miske-JVSgcV8_vb4-unsplash.jpg',
       alt: 'Binary code with globe on a laptop screen',
     },
     {
@@ -15,7 +15,15 @@ export default function CarouselSection({ className = '' }) {
       alt: 'Abstract neon lights by Lee Campbell',
     },
     {
-      src: '/person-working-html-computer.jpg',
+      src: '/view-neon-illuminated-gaming-desk-setup-with-keyboard.jpg',
+      alt: 'Person coding HTML on a computer',
+    },
+    {
+      src: '/man-using-vr-glasses.jpg',
+      alt: 'Person coding HTML on a computer',
+    },
+    {
+      src: '/ilya-pavlov-OqtafYT5kTw-unsplash.jpg',
       alt: 'Person coding HTML on a computer',
     },
   ]

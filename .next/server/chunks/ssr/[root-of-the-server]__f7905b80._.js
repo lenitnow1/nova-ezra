@@ -923,7 +923,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$carousel
 function CarouselSection({ className = '' }) {
     const slides = [
         {
-            src: '/binary-code-with-globe-laptop-computer.jpg',
+            src: '/igor-miske-JVSgcV8_vb4-unsplash.jpg',
             alt: 'Binary code with globe on a laptop screen'
         },
         {
@@ -931,7 +931,15 @@ function CarouselSection({ className = '' }) {
             alt: 'Abstract neon lights by Lee Campbell'
         },
         {
-            src: '/person-working-html-computer.jpg',
+            src: '/view-neon-illuminated-gaming-desk-setup-with-keyboard.jpg',
+            alt: 'Person coding HTML on a computer'
+        },
+        {
+            src: '/man-using-vr-glasses.jpg',
+            alt: 'Person coding HTML on a computer'
+        },
+        {
+            src: '/ilya-pavlov-OqtafYT5kTw-unsplash.jpg',
             alt: 'Person coding HTML on a computer'
         }
     ];
@@ -957,12 +965,12 @@ function CarouselSection({ className = '' }) {
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$carousel$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CarouselPrevious"], {}, void 0, false, {
                     fileName: "[project]/components/CarouselSection.jsx",
-                    lineNumber: 35,
+                    lineNumber: 43,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$carousel$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CarouselNext"], {}, void 0, false, {
                     fileName: "[project]/components/CarouselSection.jsx",
-                    lineNumber: 36,
+                    lineNumber: 44,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$carousel$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CarouselContent"], {
@@ -976,33 +984,33 @@ function CarouselSection({ className = '' }) {
                                     loading: i === 0 ? 'eager' : 'lazy'
                                 }, void 0, false, {
                                     fileName: "[project]/components/CarouselSection.jsx",
-                                    lineNumber: 41,
+                                    lineNumber: 49,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/CarouselSection.jsx",
-                                lineNumber: 40,
+                                lineNumber: 48,
                                 columnNumber: 15
                             }, this)
                         }, i, false, {
                             fileName: "[project]/components/CarouselSection.jsx",
-                            lineNumber: 39,
+                            lineNumber: 47,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/CarouselSection.jsx",
-                    lineNumber: 37,
+                    lineNumber: 45,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/CarouselSection.jsx",
-            lineNumber: 34,
+            lineNumber: 42,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/CarouselSection.jsx",
-        lineNumber: 33,
+        lineNumber: 41,
         columnNumber: 5
     }, this);
 }
@@ -1082,9 +1090,9 @@ function Hero({ titleRef, subtitleRef, ctasRef, splitText }) {
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                href: "#",
+                                href: "/learn-more",
                                 className: "inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 hover:text-white hover:bg-white/10 backdrop-blur-md px-6 py-3",
-                                children: "Learn More"
+                                children: "learn more"
                             }, void 0, false, {
                                 fileName: "[project]/components/Hero.jsx",
                                 lineNumber: 34,

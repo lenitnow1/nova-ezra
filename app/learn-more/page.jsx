@@ -57,7 +57,11 @@ export default function LearnMorePage() {
                 transparent
             />
         </div>
-
+           <div className="m-0.5 mx-[40%] fixed bg-[#0000FF]">
+          <a href="/" className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">
+            ← Back to Home
+          </a>
+        </div>
       <div className="mx-auto max-w-6xl px-6 py-16">
         <h1 data-anim="title" className="text-4xl sm:text-5xl font-bold tracking-tight">Learn More</h1>
         <p data-anim="intro" className="mt-4 text-white/70 max-w-2xl">
@@ -151,11 +155,7 @@ export default function LearnMorePage() {
           </div>
         </section>
 
-        <div className="mt-12">
-          <a href="/" className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors">
-            ← Back to Home
-          </a>
-        </div>
+   
       </div>
     </main>
   )

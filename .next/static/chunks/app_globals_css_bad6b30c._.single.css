@@ -134,8 +134,11 @@
     --color-cyan-200: #a2f4fd;
     --color-cyan-400: #00d2ef;
     --color-cyan-500: #00b7d7;
+    --color-blue-400: #54a2ff;
     --color-blue-700: #1447e6;
+    --color-blue-900: #1c398e;
     --color-indigo-500: #625fff;
+    --color-indigo-600: #4f39f6;
     --color-black: #000;
     --color-white: #fff;
     --spacing: .25rem;
@@ -189,8 +192,11 @@
       --color-cyan-200: color(display-p3 .707418 .947027 .984826);
       --color-cyan-400: color(display-p3 .294638 .813991 .934996);
       --color-cyan-500: color(display-p3 .246703 .710032 .841444);
+      --color-blue-400: color(display-p3 .397443 .62813 .992116);
       --color-blue-700: color(display-p3 .1379 .274983 .867624);
+      --color-blue-900: color(display-p3 .136395 .219428 .537145);
       --color-indigo-500: color(display-p3 .380374 .372235 .971707);
+      --color-indigo-600: color(display-p3 .297656 .227891 .929242);
     }
   }
 
@@ -199,8 +205,11 @@
       --color-cyan-200: lab(91.0821% -24.0435 -12.8306);
       --color-cyan-400: lab(76.6045% -40.9406 -29.6231);
       --color-cyan-500: lab(67.805% -35.3952 -30.2018);
+      --color-blue-400: lab(65.0361% -1.42062 -56.9803);
       --color-blue-700: lab(36.9089% 35.0961 -85.6872);
+      --color-blue-900: lab(26.1542% 15.7545 -51.5504);
       --color-indigo-500: lab(48.295% 38.3129 -81.9673);
+      --color-indigo-600: lab(38.4009% 52.6132 -92.3857);
     }
   }
 }
@@ -683,6 +692,30 @@
     }
   }
 
+  .m-0\.5 {
+    margin: calc(var(--spacing) * .5);
+  }
+
+  .mx-\[40\%\] {
+    margin-left: 40%;
+    margin-right: 40%;
+  }
+
+  .mx-\[50px\] {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  .mx-\[500px\] {
+    margin-left: 500px;
+    margin-right: 500px;
+  }
+
+  .mx-\[5000px\] {
+    margin-left: 5000px;
+    margin-right: 5000px;
+  }
+
   .mx-auto {
     margin-left: auto;
     margin-right: auto;
@@ -1115,6 +1148,18 @@
     .bg-black\/60 {
       background-color: color-mix(in oklab, var(--color-black) 60%, transparent);
     }
+  }
+
+  .bg-blue-400 {
+    background-color: var(--color-blue-400);
+  }
+
+  .bg-blue-900 {
+    background-color: var(--color-blue-900);
+  }
+
+  .bg-indigo-600 {
+    background-color: var(--color-indigo-600);
   }
 
   .bg-white\/5 {
