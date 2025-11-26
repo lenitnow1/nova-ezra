@@ -64,7 +64,7 @@ export default function HistorySection({ id = 'history' }) {
 
   return (
     <section id={id} ref={sectionRef} className="relative z-10 py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6" data-anim="slide-left">
+      <div className=" mx-auto max-w-7xl px-6" data-anim="slide-left">
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">History</h2>
           <p className="mt-3 text-white/70">Milestones that shaped the journey.</p>

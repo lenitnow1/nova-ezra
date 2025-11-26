@@ -11,6 +11,7 @@ import ServicesSection from '@/components/ServicesSection'
 import PaymentsSection from '@/components/PaymentsSection'
 import HistorySection from '@/components/HistorySection'
 import PixelBlast from "@/components/PixelBlast";
+import MagicBento from '@/components/MagicBento'
 
 
 export default function Home() {
@@ -134,7 +135,21 @@ export default function Home() {
       <ServicesSection />
       <PaymentsSection />
       <HistorySection />
-
+<div
+className='justify-center flex'>
+  <MagicBento
+    textAutoHide={true}
+    enableStars={true}
+    enableSpotlight={true}
+    enableBorderGlow={true}
+    enableTilt={true}
+    enableMagnetism={true}
+    clickEffect={true}
+    spotlightRadius={300}
+    particleCount={12}
+    glowColor="132, 0, 255"
+  />
+</div>
       {/* Footer */}
       <Footer />
 
