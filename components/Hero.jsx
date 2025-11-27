@@ -7,12 +7,7 @@ export default function Hero({ titleRef, subtitleRef, ctasRef, splitText }) {
     <main className="relative z-10">
       <section className="mx-auto max-w-7xl px-6 pt-10 pb-24 md:pb-32 lg:pt-24">
         <div className="relative">
-          {/* Animated reveal bars */}
-          <div className="absolute inset-x-0 -top-6 flex gap-8 justify-center">
-            {[...Array(5)].map((_, i) => (
-              <span key={i} className="reveal-cover block h-10 w-10  md:w-36 bg-gradient-to-r from-cyan-400/60 to-indigo-500/60 rounded-full" />
-            ))}
-          </div>
+
 
           <h1 ref={titleRef} className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">
             <span className="block text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 drop-shadow-[0_2px_40px_rgba(99,102,241,0.25)]">

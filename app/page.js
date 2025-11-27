@@ -126,17 +126,8 @@ export default function Home() {
       {/* Header */}
       <Header headerRef={headerRef} />
 
-
-
-      {/* Hero */}
-      <Hero titleRef={titleRef} subtitleRef={subtitleRef} ctasRef={ctasRef} splitText={splitText} />
-
-      {/* Sections */}
-      <ServicesSection />
-      <PaymentsSection />
-      <HistorySection />
-<div
-className='justify-center flex'>
+      <div
+className='justify-center  lg:flex hidden'>
   <MagicBento
     textAutoHide={true}
     enableStars={true}
@@ -147,9 +138,18 @@ className='justify-center flex'>
     clickEffect={true}
     spotlightRadius={300}
     particleCount={12}
-    glowColor="132, 0, 255"
+    glowColor="0, 0, 255"
   />
 </div>
+
+      {/* Hero */}
+      <Hero titleRef={titleRef} subtitleRef={subtitleRef} ctasRef={ctasRef} splitText={splitText} />
+
+      {/* Sections */}
+      <ServicesSection />
+      <PaymentsSection />
+      <HistorySection />
+
       {/* Footer */}
       <Footer />
 
