@@ -1,3 +1,0 @@
-module.exports=[94580,a=>{"use strict";a.s(["default",()=>d]);var b=a.i(87924),c=a.i(31583);function d(){return(0,b.jsx)("div",{className:"min-h-[80vh] flex items-center justify-center px-4",children:(0,b.jsx)("div",{className:"rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-4 ring-1 ring-inset ring-white/5",children:(0,b.jsx)(c.SignIn,{routing:"path",path:"/sign-in",signUpUrl:"/sign-up"})})})}}];
-
-//# sourceMappingURL=app_sign-in_%5B%5B___sign-in%5D%5D_page_jsx_9d15ad21._.js.map
