@@ -48,8 +48,8 @@ export default function CarouselSection({ className = '' }) {
               <div className="h-[22rem] sm:h-[26rem] md:h-[28rem] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md ring-1 ring-inset ring-white/5">
             <Image
       src={s.src}
-      width={100%}
-      height={100%}
+        fill
+  sizes="100vw"
       alt={s.alt}
     />
               </div>
