@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image'
 import { useEffect } from 'react'
 import { gsap } from 'gsap'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
