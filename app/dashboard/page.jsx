@@ -1,5 +1,6 @@
 import { auth } from '@clerk/nextjs/server'
 import Link from 'next/link'
+import CoreLearningSystem from '@/components/CoreLearningSystem'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,12 +24,19 @@ export default async function DashboardPage() {
   }
 
   return (
-    <main className="min-h-[70vh] grid place-items-center px-6">
-      <div className="max-w-xl w-full text-center space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
-        <p className="text-white/70">Welcome! Your userId is:</p>
-        <code className="block mx-auto max-w-full break-all rounded-md bg-white/10 px-3 py-2 text-white/90">{userId}</code>
-        <p className="text-white/60">Use this page as a starting point for protected features.</p>
+    <main className="min-h-screen bg-black text-white p-8">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <header className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">Learning Dashboard</h1>
+            <p className="mt-1 text-white/60">Your personalized interactive learning path.</p>
+          </div>
+          <div className="text-xs font-mono text-white/40 bg-white/5 border border-white/10 px-4 py-2 rounded-full">
+            SYSTEM_ACTIVE: {userId.slice(0, 8)}...
+          </div>
+        </header>
+        
+        <CoreLearningSystem />
       </div>
     </main>
   )

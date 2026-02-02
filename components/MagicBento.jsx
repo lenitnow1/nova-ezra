@@ -10,38 +10,38 @@ const cardData = [
   {
     color: 'blue',
     title: 'Analytics',
-    description: 'Track user behavior',
-    label: 'Insights'
+    description: 'Strengths & weaknesses',
+    label: 'resume Insights'
   },
   {
     color: 'indigo',
-    title: 'Dashboard',
+    title: 'Improvement progress',
     description: 'Centralized data view',
-    label: 'Overview'
+    label: 'Resume Dashboard'
   },
   {
     color: '6F00FF',
     title: 'Collaboration',
-    description: 'Work together seamlessly',
-    label: 'Teamwork'
+    description: 'How recruiters see the resume',
+    label: 'Recruiter View'
   },
   {
     color: '000000',
     title: 'Automation',
-    description: 'Streamline workflows',
-    label: 'Efficiency'
+    description: 'Keyword optimization',
+    label: ' Optimization Enginecy'
   },
   {
     color: '',
     title: 'Integration',
-    description: 'Connect favorite tools',
-    label: 'Connectivity'
+    description: 'Industry trends',
+    label: 'Job Market Data'
   },
   {
     color: 'purple',
     title: 'Security',
-    description: 'Enterprise-grade protection',
-    label: 'Protection'
+    description: 'Local processing / secure deletion',
+    label: 'Privacy First'
   }
 ];
 

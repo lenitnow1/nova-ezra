@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image'
 import { useEffect } from 'react'
 import { gsap } from 'gsap'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
@@ -46,12 +46,12 @@ export default function CarouselSection({ className = '' }) {
           {slides.map((s, i) => (
             <CarouselItem key={i}>
               <div className="h-[22rem] sm:h-[26rem] md:h-[28rem] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md ring-1 ring-inset ring-white/5">
-                <img
-                  src={s.src}
-                  alt={s.alt}
-                  className="slide-img h-full w-full object-cover"
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                />
+            <Image
+      src={s.src}
+        fill
+  sizes="100vw"
+      alt={s.alt}
+    />
               </div>
             </CarouselItem>
           ))}

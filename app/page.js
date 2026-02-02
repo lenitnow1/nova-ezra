@@ -21,6 +21,9 @@ export default function Home() {
   const headerRef = useRef(null)
   const orbsRef = useRef([])
 
+
+
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
@@ -153,6 +156,6 @@ className='justify-center  lg:flex hidden'>
       {/* Footer */}
       <Footer />
 
-    </div>
+    </div>  
   )
 }
