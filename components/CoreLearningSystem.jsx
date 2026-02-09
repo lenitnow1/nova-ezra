@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
-import * as pdfjsLib from 'pdfjs-dist'
+import React, { useState, useEffect } from 'react'
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function CoreLearningSystem() {
@@ -17,13 +17,15 @@ export default function CoreLearningSystem() {
   const [documentText, setDocumentText] = useState('')
   const [progress, setProgress] = useState({}) // { conceptId: { status: 'completed' | 'in-progress', confidence: number } }
 
+  // PDF worker setup
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const v = pdfjsLib.version || '5.4.530';
+      const v = pdfjsLib.version || '5.4.530'
       pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${v}/build/pdf.worker.min.mjs`
     }
   }, [])
 
+  // Handle PDF upload
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0]
     if (!selectedFile) return
@@ -65,6 +67,7 @@ export default function CoreLearningSystem() {
     }
   }
 
+  // Start lesson for a concept
   const startLesson = async (concept) => {
     setActiveConcept(concept)
     setLesson(null)
@@ -98,6 +101,7 @@ export default function CoreLearningSystem() {
     }
   }
 
+  // Evaluate user answer
   const handleEvaluate = async () => {
     setEvaluating(true)
     try {
@@ -128,6 +132,7 @@ export default function CoreLearningSystem() {
     }
   }
 
+  // Loading screen while analyzing document
   if (loading && !learningData) {
     return (
       <div className="flex flex-col items-center justify-center p-20 space-y-4">
@@ -229,17 +234,35 @@ export default function CoreLearningSystem() {
                   </div>
                 ) : (
                   <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+
+                    {/* Explanation */}
                     <div className="prose-sm max-w-none font-sans leading-relaxed text-white/80 whitespace-pre-wrap">
-                      {lesson.explanation}
+                      {lesson.explanation
+                        ? typeof lesson.explanation === 'string'
+                          ? lesson.explanation
+                          : lesson.explanation.text
+                            ? lesson.explanation.text
+                            : JSON.stringify(lesson.explanation, null, 2)
+                        : 'No explanation available.'}
                     </div>
 
+                    {/* Optional Key Points */}
+                    {lesson.explanation?.keyPoints?.length > 0 && (
+                      <ul className="mt-4 list-disc list-inside text-white/60 text-sm">
+                        {lesson.explanation.keyPoints.map((kp, i) => (
+                          <li key={i}>{kp}</li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {/* Comprehension Question */}
                     <div className="pt-8 border-t border-white/10 space-y-6">
                       <div className="space-y-3">
                         <h4 className="text-[10px] font-mono font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
                           <span className="size-1.5 rounded-full bg-blue-500 animate-pulse" />
                           Check_Understanding
                         </h4>
-                        <p className="text-lg font-medium text-white">{lesson.question}</p>
+                        <p className="text-lg font-medium text-white">{lesson.question || 'No question provided.'}</p>
                       </div>
 
                       <div className="space-y-4">
@@ -260,6 +283,7 @@ export default function CoreLearningSystem() {
                         </div>
                       </div>
 
+                      {/* Feedback */}
                       <AnimatePresence>
                         {feedback && (
                           <motion.div
@@ -269,13 +293,14 @@ export default function CoreLearningSystem() {
                           >
                             <div className="flex items-center gap-2 mb-2">
                               <span className={`text-[10px] font-mono font-bold uppercase tracking-widest ${feedback.isPassed ? 'text-emerald-400' : 'text-red-400'}`}>
-                                {feedback.status}_RESULT
+                                {feedback.status || 'RESULT'}_RESULT
                               </span>
                             </div>
-                            <p className="text-sm text-white/90 leading-relaxed">{feedback.feedback}</p>
+                            <p className="text-sm text-white/90 leading-relaxed">{feedback.feedback || 'No feedback available.'}</p>
                           </motion.div>
                         )}
                       </AnimatePresence>
+
                     </div>
                   </div>
                 )}

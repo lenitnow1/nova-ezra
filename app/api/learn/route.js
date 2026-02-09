@@ -1,20 +1,42 @@
 import { OpenAI } from 'openai';
 import { NextResponse } from 'next/server';
 
+// OpenRouter client
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
 });
+
+// Default model (free-friendly)
+const MODEL = process.env.AI_MODEL || 'mistralai/mistral-7b-instruct';
+
+// Helper: clean markdown fences
+function extractJSON(text) {
+  if (!text) return null;
+  const cleaned = text
+    .replace(/^```json\s*/i, '')
+    .replace(/^```\s*/i, '')
+    .replace(/```$/i, '')
+    .trim();
+  return cleaned;
+}
 
 export async function POST(req) {
   try {
-    if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json({ error: 'OpenAI API key not configured' }, { status: 500 });
+    if (!process.env.OPENROUTER_API_KEY) {
+      return NextResponse.json(
+        { error: 'OpenRouter API key not configured' },
+        { status: 500 }
+      );
     }
 
     const { text, action, context } = await req.json();
 
     if (!text && action !== 'evaluate') {
-      return NextResponse.json({ error: 'No content provided' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'No content provided' },
+        { status: 400 }
+      );
     }
 
     let systemPrompt = '';
@@ -22,90 +44,141 @@ export async function POST(req) {
 
     switch (action) {
       case 'analyze':
-        systemPrompt = `You are a senior learning-science product designer. 
-        Analyze the provided document text and structure it into logical sections and key concepts.
-        Extract dependencies between concepts to form a prerequisite-based learning path.
-        Output MUST be a JSON object.`;
-        
-        userPrompt = `Analyze this document:
-        ${text}
-        
-        Return JSON structure:
+        systemPrompt = `
+You are a senior learning-science product designer.
+Analyze the document into sections and concepts.
+Output ONLY valid JSON. No markdown. No commentary.
+`;
+        userPrompt = `
+Document:
+${text}
+
+Return JSON:
+{
+  "title": "Document Title",
+  "sections": [
+    {
+      "id": "s1",
+      "title": "Section Title",
+      "concepts": [
         {
-          "title": "Document Title",
-          "sections": [
-            {
-              "id": "s1",
-              "title": "Section Title",
-              "concepts": [
-                {
-                  "id": "c1",
-                  "name": "Concept Name",
-                  "description": "Short description",
-                  "dependencies": [] // IDs of prerequisite concepts
-                }
-              ]
-            }
-          ]
-        }`;
+          "id": "c1",
+          "name": "Concept Name",
+          "description": "Short description",
+          "dependencies": []
+        }
+      ]
+    }
+  ]
+}
+`;
         break;
 
       case 'generate-lesson':
-        systemPrompt = `You are a senior full-stack engineer and learning-science product designer.
-        Generate a lesson for a specific concept based on document context.
-        Follow the structured teaching loop: Explain → Ask.
-        Keep explanations clear, simple, and concise. Avoid long monologues.
-        Output MUST be a JSON object.`;
-        
-        userPrompt = `Document Context: ${context.documentText}
-        Target Concept: ${context.conceptName}
-        
-        Return JSON structure:
-        {
-          "explanation": "Markdown formatted explanation",
-          "question": "Comprehension question based on the explanation",
-          "correctAnswerHint": "Brief hint of what a correct answer looks like"
-        }`;
+        if (!context?.documentText || !context?.conceptName) {
+          return NextResponse.json(
+            { error: 'Missing context for generate-lesson' },
+            { status: 400 }
+          );
+        }
+        systemPrompt = `
+You are a learning-science product designer.
+Teach using Explain → Ask.
+Output ONLY valid JSON.
+`;
+        userPrompt = `
+Document Context:
+${context.documentText}
+
+Target Concept:
+${context.conceptName}
+
+Return JSON:
+{
+  "explanation": "Markdown explanation",
+  "question": "Comprehension question",
+  "correctAnswerHint": "What a good answer includes"
+}
+`;
         break;
 
       case 'evaluate':
-        systemPrompt = `You are a learning-science expert. 
-        Evaluate the user's answer to a comprehension question.
-        Provide feedback: Correct, Incorrect, or Partially Correct.
-        Be encouraging but instructional.
-        Output MUST be a JSON object.`;
-        
-        userPrompt = `Question: ${context.question}
-        User Answer: ${context.userAnswer}
-        Context: ${context.explanation}
-        
-        Return JSON structure:
-        {
-          "status": "correct" | "incorrect" | "partial",
-          "feedback": "Instructional feedback",
-          "isPassed": boolean
-        }`;
+        if (!context?.question || !context?.userAnswer || !context?.explanation) {
+          return NextResponse.json(
+            { error: 'Missing context for evaluate' },
+            { status: 400 }
+          );
+        }
+        systemPrompt = `
+You are a learning-science expert.
+Evaluate the user's answer.
+Output ONLY valid JSON.
+`;
+        userPrompt = `
+Question:
+${context.question}
+
+User Answer:
+${context.userAnswer}
+
+Explanation Context:
+${context.explanation}
+
+Return JSON:
+{
+  "status": "correct" | "incorrect" | "partial",
+  "feedback": "Feedback text",
+  "isPassed": true
+}
+`;
         break;
 
       default:
-        return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
+        return NextResponse.json(
+          { error: 'Invalid action' },
+          { status: 400 }
+        );
     }
 
+    // Send request to AI
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: MODEL,
       messages: [
-        { role: 'system', content: 'You are a helpful assistant that outputs JSON.' },
+        { role: 'system', content: 'Return ONLY raw JSON. Do NOT wrap in markdown.' },
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
+        { role: 'user', content: userPrompt },
       ],
-      response_format: { type: 'json_object' },
+      temperature: 0.2,
     });
 
-    const result = JSON.parse(response.choices[0].message.content);
-    return NextResponse.json(result);
+    const raw = response.choices[0]?.message?.content || '';
+    const cleaned = extractJSON(raw);
 
+    if (!cleaned) {
+      console.error('AI returned empty response:', raw);
+      return NextResponse.json(
+        { error: 'AI returned empty response', raw: raw.slice(0, 500) },
+        { status: 500 }
+      );
+    }
+
+    let parsed;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch (err) {
+      console.error('JSON parse failed. Raw output:', raw);
+      return NextResponse.json(
+        { error: 'AI returned invalid JSON', raw: raw.slice(0, 500) },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(parsed);
   } catch (error) {
     console.error('Learning API Error:', error);
-    return NextResponse.json({ error: 'Failed to process request' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to process request', details: error.message },
+      { status: 500 }
+    );
   }
 }
