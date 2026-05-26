@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { Cormorant_Garamond, Source_Serif_4, Geist_Mono } from "next/font/google";
+import LibraryPixelBackground from "@/components/LibraryPixelBackground";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -34,6 +35,7 @@ function LibraryBody({ children }) {
     >
       <div className="library-shell">
         <div className="library-ambient" aria-hidden="true" />
+        <LibraryPixelBackground />
         <div className="library-grain" aria-hidden="true" />
         <div className="library-content">{children}</div>
       </div>
