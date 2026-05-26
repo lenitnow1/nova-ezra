@@ -5,38 +5,38 @@ import CarouselSection from '@/components/CarouselSection'
 export default function Hero({ titleRef, subtitleRef, ctasRef, splitText }) {
   return (
     <main className="relative z-10">
-      <section className="mx-auto max-w-7xl px-6 pt-10 pb-24 md:pb-32 lg:pt-24">
-        <div className="relative">
+      <section className="mx-auto max-w-7xl px-6 pt-12 pb-20 md:pb-28 lg:pt-20">
+        <div className="relative max-w-4xl">
+          <p className="chapter-label mb-6">Chapter I — Welcome</p>
 
-
-          <h1 ref={titleRef} className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">
-            <span className="block text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 drop-shadow-[0_2px_40px_rgba(99,102,241,0.25)]">
-              {splitText('The Future, Now')}
+          <h1
+            ref={titleRef}
+            className="font-display text-5xl md:text-7xl font-semibold tracking-tight leading-[1.08] text-ivory"
+          >
+            <span className="block drop-shadow-[0_2px_32px_rgba(200,169,107,0.12)]">
+              {splitText('Knowledge, Illuminated')}
             </span>
           </h1>
 
-          <p ref={subtitleRef} className="mt-6 max-w-2xl text-lg md:text-xl text-white/70">
-            Build immersive experiences with speed-of-light performance. Crafted for creators who dream in neon.
+          <p
+            ref={subtitleRef}
+            className="mt-8 max-w-2xl text-lg md:text-xl text-sepia font-body leading-relaxed"
+          >
+            Step into an AI-powered private library. Upload texts, unfold lessons like
+            open volumes, and study in a calm, scholarly reading room built for long sessions.
           </p>
 
-          <div ref={ctasRef} className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-            <a
-              href="dashboard"
-              className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 to-indigo-500 text-black font-semibold px-6 py-3 shadow-[0_10px_30px_rgba(56,189,248,0.25)] hover:shadow-[0_14px_40px_rgba(99,102,241,0.35)] transition-shadow"
-            >
-              Get Started
+          <div ref={ctasRef} className="mt-12 flex flex-col sm:flex-row items-start gap-4">
+            <a href="/dashboard" className="btn-leather">
+              Enter the Reading Room
             </a>
-            <a
-              href="/learn-more"
-              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 hover:text-white hover:bg-white/10 backdrop-blur-md px-6 py-3"
-            >
-              learn more
+            <a href="/learn-more" className="btn-embossed">
+              Explore the Archive
             </a>
           </div>
-
-          {/* Carousel (shadcn-style) */}
-          <CarouselSection />
         </div>
+
+        <CarouselSection />
       </section>
     </main>
   )

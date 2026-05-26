@@ -1,14 +1,5 @@
+import React from 'react'
 
-import React from 'react';
-
-// Tailwind-based Info Card (no external styled-components dependency)
-// Props:
-// - label: small prefix text before date (e.g., "Article on")
-// - date: secondary small text on the right of the header
-// - title: main heading text
-// - categories: array of strings
-// - footer: footer text (e.g., author)
-// - className: extra classes for outer wrapper
 const Card = ({
   label = '',
   date = '',
@@ -21,16 +12,9 @@ const Card = ({
   return (
     <div
       className={[
-        'w-full max-w-sm h-full',
-        'text-white',
-        'p-5 rounded-lg',
-          'relative',
-        // Gradient border trick using CSS custom background
-        '[background:linear-gradient(#212121,#212121)_padding-box,linear-gradient(145deg,transparent_35%,#0000FF,#40c9ff)_border-box] border border-transparent',
+        'w-full max-w-sm h-full page-panel p-6 emboss-border',
         'flex flex-col',
-        'cursor-pointer origin-bottom-right',
-        'transition duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:rotate-10',
-        'bg-[#212121]',
+        'transition-shadow duration-300 hover:shadow-[var(--shadow-elevated)]',
         className,
       ].join(' ')}
       data-anim="card"
@@ -38,17 +22,19 @@ const Card = ({
       <div className="flex-1">
         {(label || date) && (
           <div className="flex items-center justify-between text-sm">
-            <span className="font-semibold text-white/50 mr-1">{label}</span>
-            <span className="text-white/70">{date}</span>
+            <span className="chapter-label !text-[0.65rem]">{label}</span>
+            <span className="text-ink/50 font-body text-xs">{date}</span>
           </div>
         )}
 
         {title && (
-          <p className="text-2xl mt-6 mb-2 font-semibold leading-snug">{title}</p>
+          <p className="font-display text-2xl mt-5 mb-3 font-semibold leading-snug text-ink">
+            {title}
+          </p>
         )}
 
         {description && (
-          <p className="text-white/70 mb-4">{description}</p>
+          <p className="text-ink/70 mb-5 font-body leading-relaxed text-sm">{description}</p>
         )}
 
         {Array.isArray(categories) && categories.length > 0 && (
@@ -56,7 +42,7 @@ const Card = ({
             {categories.map((cat, i) => (
               <span
                 key={i}
-                className="bg-[#0000FF] text-black/90 px-2 py-1 font-semibold uppercase text-[12px] rounded-full"
+                className="bg-antique text-ink/80 px-2.5 py-1 font-display text-[11px] tracking-wide uppercase rounded-md border border-leather/15"
               >
                 {cat}
               </span>
@@ -66,10 +52,10 @@ const Card = ({
       </div>
 
       {footer && (
-        <div className="font-semibold text-white/60 mt-2">{footer}</div>
+        <div className="font-body text-ink/50 mt-4 text-sm">{footer}</div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Card;
+export default Card

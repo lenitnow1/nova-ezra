@@ -12,43 +12,28 @@ export default function ServicesSection({ id = 'services' }) {
     const ctx = gsap.context(() => {
       const q = gsap.utils.selector(sectionRef)
 
-      // Slide in the whole section content from the left
       gsap.from(q('[data-anim="slide-left"]'), {
-        x: -80,
+        x: -40,
         autoAlpha: 0,
-        duration: 0.9,
-        ease: 'power3.out',
+        duration: 0.8,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 80%',
+          start: 'top 82%',
           once: true,
         },
       })
 
-      // Reveal/zoom-in cards
       gsap.from(q('[data-anim="reveal"]'), {
         opacity: 0,
-        y: 36,
-        scale: 0.96,
-        duration: 0.9,
-        ease: 'power3.out',
-        stagger: 0.12,
+        y: 20,
+        duration: 0.8,
+        ease: 'power2.out',
+        stagger: 0.1,
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 75%',
+          start: 'top 78%',
           once: true,
-        },
-      })
-
-      // Parallax decor
-      gsap.to(q('[data-parallax="slow"]'), {
-        yPercent: -20,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
         },
       })
     }, sectionRef)
@@ -56,53 +41,36 @@ export default function ServicesSection({ id = 'services' }) {
     return () => ctx.revert()
   }, [])
 
-  return (
-    <section id={id} ref={sectionRef} className="relative z-10 py-24 md:py-32">
-      {/* Parallax background accents */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          data-parallax="slow"
-          className="absolute -left-24 top-1/4 h-72 w-72 rounded-full blur-3xl opacity-30"
-          style={{
-            background:
-              'radial-gradient(circle at 30% 30%, rgba(34,211,238,0.35), transparent 60%)',
-          }}
-        />
-        <div
-          data-parallax="slow"
-          className="absolute -right-24 bottom-0 h-80 w-80 rounded-full blur-3xl opacity-30"
-          style={{
-            background:
-              'radial-gradient(circle at 70% 70%, rgba(99,102,241,0.35), transparent 60%)',
-          }}
-        />
-      </div>
+  const items = [
+    { title: 'Document Ingestion', desc: 'Upload PDFs and transform them into structured, readable study material.' },
+    { title: 'Guided Lessons', desc: 'AI-generated explanations and checks that feel like a patient tutor.' },
+    { title: 'Learning Paths', desc: 'Concepts organized like chapters in an intelligent textbook.' },
+    { title: 'Progress Tracking', desc: 'Refined progress markers that honor your study journey.' },
+    { title: 'Private Archive', desc: 'Your materials, your pace — a personal knowledge collection.' },
+    { title: 'Scholarly Support', desc: 'Thoughtful feedback designed for comprehension, not gamification.' },
+  ]
 
+  return (
+    <section id={id} ref={sectionRef} className="chapter-section relative z-10">
       <div className="mx-auto max-w-7xl px-6" data-anim="slide-left">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Services</h2>
-          <p className="mt-3 text-white/70">Everything you need to launch, scale, and delight your users.</p>
+        <p className="chapter-label text-center">Chapter II</p>
+        <div className="text-center max-w-2xl mx-auto mt-3">
+          <h2 className="font-display text-3xl md:text-4xl font-semibold text-ivory tracking-tight">
+            The Collection
+          </h2>
+          <p className="mt-4 text-sepia font-body">
+            Everything you need for deep, comfortable learning — curated like a well-appointed library.
+          </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            { title: 'API Integrations', desc: 'Robust, well‑documented endpoints with real‑time webhooks.' },
-            { title: 'Authentication', desc: 'Enterprise‑grade auth with SSO, MFA, and fine‑grained roles.' },
-            { title: 'Analytics', desc: 'Actionable insights with anomaly detection and cohort analysis.' },
-            { title: 'Automation', desc: 'Powerful workflows with retries, scheduling, and branching.' },
-            { title: 'Security', desc: 'End‑to‑end encryption, audit logs, and compliance tooling.' },
-            { title: 'Support', desc: '24/7 global support and dedicated success engineers.' },
-          ].map((item, i) => (
-            <div
-              key={i}
-              data-anim="reveal"
-              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 ring-1 ring-inset ring-white/5 hover:bg-white/10 transition"
-            >
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {items.map((item, i) => (
+            <div key={i} data-anim="reveal" className="page-panel p-6 emboss-border transition-shadow duration-300 hover:shadow-[var(--shadow-elevated)]">
               <div className="flex items-start gap-4">
-                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-500 shrink-0" />
+                <div className="h-10 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-gold to-bronze" />
                 <div>
-                  <h3 className="font-semibold text-white">{item.title}</h3>
-                  <p className="mt-1 text-sm text-white/70">{item.desc}</p>
+                  <h3 className="font-display text-lg font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-2 text-sm text-ink/70 font-body leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             </div>

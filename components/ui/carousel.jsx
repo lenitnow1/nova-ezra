@@ -8,9 +8,9 @@ const CarouselContext = createContext(null)
 
 export function Carousel({
   className = '',
-  options = { loop: true, align: 'start' },
+  options = { loop: true, align: 'center' },
   autoplay = true,
-  autoplayDelay = 4000,
+  autoplayDelay = 5000,
   children,
 }) {
   const plugins = []
@@ -48,7 +48,7 @@ export function Carousel({
     <CarouselContext.Provider value={{ emblaApi, scrollPrev, scrollNext, canScrollPrev, canScrollNext }}>
       <div className={`relative ${className}`}>
         <div className="overflow-hidden" ref={emblaRef}>
-          <div className="-ml-4 flex" role="list">
+          <div className="flex" role="list">
             {children}
           </div>
         </div>
@@ -63,11 +63,14 @@ export function CarouselContent({ className = '', children }) {
 
 export function CarouselItem({ className = '', children }) {
   return (
-    <div role="listitem" className={`min-w-0 shrink-0 grow-0 basis-full pl-4 ${className}`}>
+    <div role="listitem" className={`min-w-0 shrink-0 grow-0 basis-full flex justify-center ${className}`}>
       {children}
     </div>
   )
 }
+
+const navBtnClass =
+  'absolute top-1/2 -translate-y-1/2 inline-flex size-10 items-center justify-center rounded-md emboss-border bg-walnut/90 text-gold hover:text-ivory hover:bg-walnut transition-colors duration-300 disabled:opacity-40 disabled:cursor-not-allowed'
 
 export function CarouselPrevious({ className = '' }) {
   const { scrollPrev, canScrollPrev } = useContext(CarouselContext) || {}
@@ -77,7 +80,7 @@ export function CarouselPrevious({ className = '' }) {
       aria-label="Previous slide"
       onClick={scrollPrev}
       disabled={!canScrollPrev}
-      className={`absolute left-2 top-1/2 -translate-y-1/2 inline-flex size-9 items-center justify-center rounded-full bg-white/10 text-white/80 hover:bg-white/20 backdrop-blur border border-white/10 transition disabled:opacity-40 disabled:cursor-not-allowed ${className}`}
+      className={`left-3 ${navBtnClass} ${className}`}
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
         <path fillRule="evenodd" d="M15.53 4.47a.75.75 0 0 1 0 1.06L9.06 12l6.47 6.47a.75.75 0 1 1-1.06 1.06l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
@@ -94,7 +97,7 @@ export function CarouselNext({ className = '' }) {
       aria-label="Next slide"
       onClick={scrollNext}
       disabled={!canScrollNext}
-      className={`absolute right-2 top-1/2 -translate-y-1/2 inline-flex size-9 items-center justify-center rounded-full bg-white/10 text-white/80 hover:bg-white/20 backdrop-blur border border-white/10 transition disabled:opacity-40 disabled:cursor-not-allowed ${className}`}
+      className={`right-3 ${navBtnClass} ${className}`}
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
         <path fillRule="evenodd" d="M8.47 19.53a.75.75 0 0 1 0-1.06L14.94 12 8.47 5.53a.75.75 0 1 1 1.06-1.06l7 7a.75.75 0 0 1 0 1.06l-7 7a.75.75 0 0 1-1.06 0Z" clipRule="evenodd" />

@@ -12,42 +12,28 @@ export default function HistorySection({ id = 'history' }) {
     const ctx = gsap.context(() => {
       const q = gsap.utils.selector(sectionRef)
 
-      // Slide in the whole section content from the left
       gsap.from(q('[data-anim="slide-left"]'), {
-        x: -80,
+        x: -40,
         autoAlpha: 0,
-        duration: 0.9,
-        ease: 'power3.out',
+        duration: 0.8,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 80%',
+          start: 'top 82%',
           once: true,
         },
       })
 
-      // Timeline items stagger in
       gsap.from(q('[data-anim="item"]'), {
         opacity: 0,
-        y: 28,
-        duration: 0.8,
-        ease: 'power3.out',
+        y: 16,
+        duration: 0.7,
+        ease: 'power2.out',
         stagger: 0.1,
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 75%',
+          start: 'top 78%',
           once: true,
-        },
-      })
-
-      // Subtle parallax on line
-      gsap.to(q('[data-parallax="line"]'), {
-        yPercent: -15,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
         },
       })
     }, sectionRef)
@@ -56,36 +42,34 @@ export default function HistorySection({ id = 'history' }) {
   }, [])
 
   const events = [
-    { year: '2021', label: 'MVP Launched', desc: 'Shipped the first public beta with core features.' },
-    { year: '2022', label: 'Series A', desc: 'Raised funding and scaled the team internationally.' },
-    { year: '2023', label: 'Global Launch', desc: 'Expanded to 40+ regions with localized experiences.' },
-    { year: '2024', label: 'Realtime Engine', desc: 'Introduced low‑latency streaming APIs and edge compute.' },
+    { year: '2024', label: 'The Archive Opens', desc: 'Nova begins as a vision for intelligent, beautiful reading.' },
+    { year: '2025', label: 'Interactive Textbooks', desc: 'PDF ingestion and AI-guided lessons join the collection.' },
+    { year: '2025', label: 'The Reading Room', desc: 'A dedicated dashboard for long-form study sessions.' },
+    { year: 'Today', label: 'Your Private Library', desc: 'Upload, learn, and grow within a calm scholarly space.' },
   ]
 
   return (
-    <section id={id} ref={sectionRef} className="relative z-10 py-24 md:py-32">
-      <div className=" mx-auto max-w-7xl px-6" data-anim="slide-left">
+    <section id={id} ref={sectionRef} className="chapter-section relative z-10 pb-24">
+      <div className="mx-auto max-w-7xl px-6" data-anim="slide-left">
         <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">History</h2>
-          <p className="mt-3 text-white/70">Milestones that shaped the journey.</p>
+          <p className="chapter-label">Chapter IV</p>
+          <h2 className="mt-3 font-display text-3xl md:text-4xl font-semibold text-ivory tracking-tight">
+            A Brief History
+          </h2>
+          <p className="mt-4 text-sepia font-body">Milestones along the shelves of our story.</p>
         </div>
 
-        <div className="relative mt-12">
-          {/* Vertical line with parallax */}
-          <div data-parallax="line" className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-white/20 via-white/10 to-transparent" />
+        <div className="relative mt-14 max-w-2xl mx-auto">
+          <div className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-gold/40 via-bronze/20 to-transparent" />
 
-          <ol className="relative grid grid-cols-1 gap-8">
+          <ol className="relative space-y-10">
             {events.map((e, i) => (
-              <li key={i} data-anim="item" className="relative">
-                <div className={`flex flex-col ${i % 2 ? 'md:items-end' : ''}`}>
-                  <div className="inline-flex items-center gap-3">
-                    <span className="text-white/40 text-sm tracking-widest uppercase">{e.year}</span>
-                    <span className="h-2 w-2 rounded-full bg-gradient-to-br from-cyan-400 to-indigo-500" />
-                  </div>
-                  <div className="mt-2 max-w-xl rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-5 ring-1 ring-inset ring-white/5">
-                    <div className="font-semibold text-white">{e.label}</div>
-                    <div className="mt-1 text-sm text-white/70">{e.desc}</div>
-                  </div>
+              <li key={i} data-anim="item" className="relative pl-12 md:pl-0">
+                <span className="absolute left-2.5 md:left-1/2 md:-translate-x-1/2 top-1.5 size-3 rounded-full bg-gold shadow-[0_0_12px_rgba(200,169,107,0.4)]" />
+                <div className="page-panel p-5 emboss-border md:max-w-md md:ml-auto md:mr-8">
+                  <span className="font-display text-xs tracking-[0.2em] uppercase text-bronze">{e.year}</span>
+                  <div className="mt-2 font-display text-lg font-semibold text-ink">{e.label}</div>
+                  <p className="mt-2 text-sm text-ink/70 font-body">{e.desc}</p>
                 </div>
               </li>
             ))}
