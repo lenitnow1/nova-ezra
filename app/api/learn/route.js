@@ -64,12 +64,17 @@ Return:
     }
 
     if (action === 'evaluate') {
-      systemPrompt = `Return ONLY JSON.`
-      userPrompt = `
-Question: ${context.question}
-Answer: ${context.userAnswer}
-`
+      systemPrompt = `Return ONLY valid JSON. No markdown.`
+      userPrompt = `Question: ${context.question}
+Student answer: ${context.userAnswer}
+Reference explanation: ${context.explanation}
 
+Return:
+{
+  "isPassed": true,
+  "status": "Mastered" or "Keep studying",
+  "feedback": "Brief, encouraging feedback"
+}`
     }
 
     const res = await openai.chat.completions.create({

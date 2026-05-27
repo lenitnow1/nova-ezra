@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Tesseract from 'tesseract.js'
 
@@ -18,22 +17,45 @@ export default function CoreLearningSystem() {
   const [documentText, setDocumentText] = useState('')
   const [progress, setProgress] = useState({})
 
+  const pdfjsLibRef = useRef(null)
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const v = pdfjsLib.version || '5.4.530'
-      pdfjsLib.GlobalWorkerOptions.workerSrc =
-        `https://unpkg.com/pdfjs-dist@${v}/build/pdf.worker.min.mjs`
+      ;(async () => {
+        try {
+          const pdfjsLib = await import('pdfjs-dist')
+  
+          pdfjsLib.GlobalWorkerOptions.workerSrc =
+            '/pdf-worker/pdf.worker.min.mjs'
+  
+          pdfjsLibRef.current = pdfjsLib
+  
+        } catch (err) {
+          console.error(err)
+          setError('Failed to load the PDF reader.')
+        }
+      })()
     }
   }, [])
 
   const extractPDFText = async (file) => {
+    const pdfjsLib = pdfjsLibRef.current
+
+    if (!pdfjsLib) {
+      throw new Error('PDF reader is still loading.')
+    }
+
     const arrayBuffer = await file.arrayBuffer()
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
+
+    const pdf = await pdfjsLib.getDocument({
+      data: arrayBuffer,
+    }).promise
 
     let fullText = ''
 
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i)
+
       const content = await page.getTextContent()
 
       const pageText = content.items
@@ -51,12 +73,16 @@ export default function CoreLearningSystem() {
       await file.arrayBuffer(),
       'eng'
     )
+
     return result.data.text || ''
   }
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0]
+
     if (!selectedFile) return
+
+    setFile(selectedFile)
 
     if (selectedFile.type !== 'application/pdf') {
       setError('Only PDF files are accepted in this archive.')
@@ -83,11 +109,13 @@ export default function CoreLearningSystem() {
 
       const res = await fetch('/api/learn', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           text: safeText.slice(0, 3000),
-          action: 'analyze'
-        })
+          action: 'analyze',
+        }),
       })
 
       if (!res.ok) {
@@ -95,10 +123,12 @@ export default function CoreLearningSystem() {
       }
 
       const data = await res.json()
+
       setLearningData(data)
 
     } catch (err) {
-      setError(err.message)
+      console.error(err)
+      setError(err.message || 'An unexpected error occurred.')
     } finally {
       setLoading(false)
     }
@@ -114,22 +144,28 @@ export default function CoreLearningSystem() {
     try {
       const res = await fetch('/api/learn', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           action: 'generate-lesson',
           context: {
             documentText: documentText.slice(0, 3000),
-            conceptName: concept.name
-          }
-        })
+            conceptName: concept.name,
+          },
+        }),
       })
 
-      if (!res.ok) throw new Error(await res.text())
+      if (!res.ok) {
+        throw new Error(await res.text())
+      }
 
       const data = await res.json()
+
       setLesson(data)
 
-    } catch {
+    } catch (err) {
+      console.error(err)
       setError('Lesson generation failed. Please try again.')
     } finally {
       setLoading(false)
@@ -142,49 +178,71 @@ export default function CoreLearningSystem() {
     try {
       const res = await fetch('/api/learn', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           action: 'evaluate',
           context: {
             question: lesson.question,
             userAnswer,
-            explanation: lesson.explanation
-          }
-        })
+            explanation: lesson.explanation,
+          },
+        }),
       })
 
-      if (!res.ok) throw new Error(await res.text())
+      if (!res.ok) {
+        throw new Error(await res.text())
+      }
 
       const data = await res.json()
+
       setFeedback(data)
 
       if (data.isPassed) {
         setProgress(prev => ({
           ...prev,
-          [activeConcept.id]: { status: 'completed' }
+          [activeConcept.id]: {
+            status: 'completed',
+          },
         }))
       }
 
-    } catch {
+    } catch (err) {
+      console.error(err)
       setError('Evaluation failed. Please try again.')
     } finally {
       setEvaluating(false)
     }
   }
 
-  const completedCount = Object.keys(progress).filter(k => progress[k]?.status === 'completed').length
-  const totalConcepts = learningData?.sections?.reduce(
-    (acc, s) => acc + (s.concepts?.length || 0),
-    0
-  ) || 0
-  const progressPct = totalConcepts > 0 ? (completedCount / totalConcepts) * 100 : 0
+  const completedCount = Object.keys(progress).filter(
+    k => progress[k]?.status === 'completed'
+  ).length
+
+  const totalConcepts =
+    learningData?.sections?.reduce(
+      (acc, s) => acc + (s.concepts?.length || 0),
+      0
+    ) || 0
+
+  const progressPct =
+    totalConcepts > 0
+      ? (completedCount / totalConcepts) * 100
+      : 0
 
   if (loading && !learningData) {
     return (
       <div className="flex flex-col items-center justify-center py-24 animate-fade-in">
         <div className="spinner-refined mb-6" />
-        <p className="font-display text-lg text-sepia tracking-wide">Preparing your volume…</p>
-        <p className="mt-2 text-sm text-sepia/70 font-body">Extracting and cataloguing text</p>
+
+        <p className="font-display text-lg text-sepia tracking-wide">
+          Preparing your volume…
+        </p>
+
+        <p className="mt-2 text-sm text-sepia/70 font-body">
+          Extracting and cataloguing text
+        </p>
       </div>
     )
   }
@@ -196,6 +254,7 @@ export default function CoreLearningSystem() {
       <aside className="lg:col-span-4">
         {!learningData ? (
           <div className="toc-sidebar p-8 flex flex-col items-center justify-center text-center min-h-[320px] sticky top-6">
+
             <div className="size-14 rounded-md emboss-border bg-walnut flex items-center justify-center mb-6">
               <span className="font-display text-2xl text-gold">§</span>
             </div>
@@ -210,6 +269,7 @@ export default function CoreLearningSystem() {
 
             <label className="cursor-pointer">
               <span className="btn-leather">Select PDF</span>
+
               <input
                 type="file"
                 accept=".pdf"
@@ -219,32 +279,40 @@ export default function CoreLearningSystem() {
             </label>
 
             {error && (
-              <p className="text-red-300/90 text-sm mt-6 font-body max-w-xs">{error}</p>
+              <p className="text-red-300/90 text-sm mt-6 font-body max-w-xs">
+                {error}
+              </p>
             )}
           </div>
         ) : (
           <div className="toc-sidebar p-6 sticky top-6">
+
             <div className="mb-6 pb-6 border-b border-gold/10">
               <p className="chapter-label mb-2">Table of Contents</p>
+
               <h2 className="font-display text-xl font-semibold text-ivory">
                 Learning Path
               </h2>
+
               <p className="text-sepia/80 text-sm mt-1 font-body">
                 Generated from your document
               </p>
 
               {totalConcepts > 0 && (
                 <div className="mt-5">
+
                   <div className="flex justify-between text-xs text-sepia mb-2 font-body">
                     <span>Progress</span>
                     <span>{completedCount} / {totalConcepts}</span>
                   </div>
+
                   <div className="progress-refined">
                     <div
                       className="progress-refined-bar"
                       style={{ width: `${progressPct}%` }}
                     />
                   </div>
+
                 </div>
               )}
             </div>
@@ -252,6 +320,7 @@ export default function CoreLearningSystem() {
             <div className="space-y-6 max-h-[calc(100vh-280px)] overflow-y-auto pr-1">
               {learningData.sections?.map((section) => (
                 <div key={section.id}>
+
                   <h3 className="text-xs uppercase tracking-[0.2em] text-gold mb-3 font-display">
                     {section.title}
                   </h3>
@@ -263,28 +332,41 @@ export default function CoreLearningSystem() {
                         type="button"
                         onClick={() => startLesson(concept)}
                         className={`toc-entry w-full text-left p-4 ${
-                          activeConcept?.id === concept.id ? 'toc-entry-active' : ''
+                          activeConcept?.id === concept.id
+                            ? 'toc-entry-active'
+                            : ''
                         }`}
                       >
+
                         <div className="flex items-center justify-between gap-2">
+
                           <span className="font-body font-medium text-ivory/90 text-sm">
                             {concept.name}
                           </span>
 
                           {progress[concept.id]?.status === 'completed' && (
-                            <span className="text-gold text-sm" aria-label="Completed">✓</span>
+                            <span
+                              className="text-gold text-sm"
+                              aria-label="Completed"
+                            >
+                              ✓
+                            </span>
                           )}
+
                         </div>
 
                         <p className="text-xs text-sepia/70 mt-2 line-clamp-2 font-body leading-relaxed">
                           {concept.description}
                         </p>
+
                       </button>
                     ))}
                   </div>
+
                 </div>
               ))}
             </div>
+
           </div>
         )}
       </aside>
@@ -294,6 +376,7 @@ export default function CoreLearningSystem() {
 
         {!activeConcept ? (
           <div className="lesson-spread min-h-[560px] flex flex-col items-center justify-center text-center p-12 animate-page-in">
+
             <div className="size-20 rounded-full emboss-border bg-antique/50 flex items-center justify-center mb-8">
               <span className="font-display text-4xl text-bronze">✦</span>
             </div>
@@ -305,6 +388,7 @@ export default function CoreLearningSystem() {
             <p className="text-ink/60 max-w-md font-body leading-relaxed">
               Upload a PDF and choose a chapter from the table of contents to open your lesson.
             </p>
+
           </div>
         ) : (
           <motion.div
@@ -334,7 +418,6 @@ export default function CoreLearningSystem() {
               </div>
             ) : (
               <div className="space-y-8">
-
                 <section className="lesson-inner p-6 md:p-8">
                   <h3 className="font-display text-lg font-semibold text-ink mb-4">
                     Explanation
@@ -394,11 +477,11 @@ export default function CoreLearningSystem() {
                     )}
                   </AnimatePresence>
                 </section>
-
               </div>
             )}
           </motion.div>
         )}
+
       </div>
     </div>
   )
