@@ -1,5 +1,7 @@
 "use client"
 
+// SECTIONS_ANALYSIS
+
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 

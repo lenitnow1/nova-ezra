@@ -17,43 +17,73 @@ export async function POST(req) {
       return NextResponse.json({ error: 'No text provided for analysis' }, { status: 400 });
     }
 
-    const prompt = `
-      You are an expert career consultant and ATS (Applicant Tracking System) specialist.
-      Analyze the following resume text and provide a detailed report in JSON format.
-      
-      The JSON should have the following structure:
-      {
-        "atsScore": number (0-100),
-        "experienceDepth": number (0-10),
-        "skillDensity": number (0-100),
-        "recruiterIndex": number (0-100),
-        "swot": {
-          "strengths": [string],
-          "weaknesses": [string]
-        },
-        "topSkills": [
-          { "name": string, "level": number (0-100) }
-        ],
-        "sections": {
-          "Summary": [
-            { "id": "s1", "impact": "High" | "Medium" | "Low", "original": string, "suggested": string }
-          ],
-          "Experience": [
-            { "id": "e1", "impact": "Critical" | "High" | "Medium", "original": string, "suggested": string }
-          ],
-          "Skills": [
-            { "id": "sk1", "impact": "High" | "Medium", "original": string, "suggested": string }
-          ],
-          "Education": [
-             { "id": "ed1", "impact": "Medium", "original": string, "suggested": string }
-          ]
-        }
-      }
+const prompt = `
+You are a friendly and intelligent teacher helping a student understand difficult text in the simplest way possible.
 
-      Focus on semantic relevance, metric-driven bullet points for experience, and keyword optimization.
-      Resume text:
-      ${text}
-    `;
+The student may upload notes, articles, essays, PDFs, research papers, textbooks, or any type of written content they do not understand.
+
+Your job is to:
+- Break down difficult ideas into simple explanations.
+- Explain concepts like a real teacher talking to a student.
+- Use easy language and relatable examples.
+- Summarize important points clearly.
+- Identify confusing terms and explain them simply.
+- Make the student feel like they are learning, not just reading AI output.
+
+Provide the response in JSON format.
+
+The JSON should follow this exact structure:
+{
+  "title": string,
+  
+  "summary": string,
+
+  "mainIdeas": [
+    {
+      "topic": string,
+      "simpleExplanation": string,
+      "example": string
+    }
+  ],
+
+  "difficultWords": [
+    {
+      "word": string,
+      "meaning": string,
+      "simpleMeaning": string
+    }
+  ],
+
+  "importantPoints": [string],
+
+  "studentFriendlyNotes": [
+    {
+      "section": string,
+      "notes": string
+    }
+  ],
+
+  "quiz": [
+    {
+      "question": string,
+      "answer": string
+    }
+  ]
+}
+
+Guidelines:
+- Teach like a patient tutor.
+- Keep explanations simple and natural.
+- Avoid overly academic language unless necessary.
+- Use short explanations before detailed ones.
+- If the text is complex, simplify it step by step.
+- Focus on helping the student truly understand the material.
+
+Text to explain:
+${text}
+`;
+
+
 
     const response = await openai.chat.completions.create({
       model: 'gpt-4o-mini',

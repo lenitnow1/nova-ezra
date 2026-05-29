@@ -1,28 +1,28 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 
-const DEFAULT_PARTICLE_COUNT = 12;
+const DEFAULT_PARTICLE_COUNT = 52;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
 const DEFAULT_GLOW_COLOR = '132, 0, 255';
 const MOBILE_BREAKPOINT = 768;
 
 const cardData = [
   {
-    color: 'blue',
+    color: '#1F00D1',
     title: 'Analytics',
     description: 'Strengths & weaknesses',
-    label: 'resume Insights'
+    label: 'library Insights'
   },
   {
-    color: 'indigo',
+    color: '#CA07CA',
     title: 'Improvement progress',
     description: 'Centralized data view',
-    label: 'Resume Dashboard'
+    label: 'Reading Dashboard'
   },
   {
     color: '6F00FF',
     title: 'Collaboration',
-    description: 'How recruiters see the resume',
+    description: 'How recruiters critique the resume',
     label: 'Recruiter View'
   },
   {

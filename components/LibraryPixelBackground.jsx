@@ -9,19 +9,20 @@ export default function LibraryPixelBackground() {
       <PixelBlast
         variant="circle"
         pixelSize={6}
-        color="#C8A96B"
-        patternScale={3}
-        patternDensity={1.1}
-        pixelSizeJitter={0.45}
-        rippleSpeed={0.35}
-        rippleThickness={0.1}
-        rippleIntensityScale={1.25}
-        liquid
-        liquidStrength={0.1}
+        color="#C8A56B"
+        patternScale={4.75}
+        patternDensity={1.05}
+        pixelSizeJitter={0}
+        enableRipples
+        rippleSpeed={0.4}
+        rippleThickness={0.12}
+        rippleIntensityScale={1.5}
+        liquid={false}
+        liquidStrength={0.12}
         liquidRadius={1.2}
-        liquidWobbleSpeed={4.5}
-        speed={0.55}
-        edgeFade={0.3}
+        liquidWobbleSpeed={5}
+        speed={0.35}
+        edgeFade={0.21}
         transparent
       />
     </div>

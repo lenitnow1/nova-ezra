@@ -1,5 +1,5 @@
 'use client'
-
+// LEARNING_SYSTEM
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Tesseract from 'tesseract.js'

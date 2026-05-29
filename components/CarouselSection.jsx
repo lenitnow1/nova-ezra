@@ -1,5 +1,5 @@
 'use client'
-
+// ILLUSTRATED_PLATES
 import Image from 'next/image'
 import { useEffect } from 'react'
 import { gsap } from 'gsap'
