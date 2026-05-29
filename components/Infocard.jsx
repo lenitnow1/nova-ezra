@@ -12,7 +12,7 @@ const Card = ({
   return (
     <div
       className={[
-        'w-full max-w-sm h-full page-panel p-6 emboss-border',
+        'w-full max-w-sm h-full page-panel p-6 emboss-border hover:animate-pulse',
         'flex flex-col',
         'transition-shadow duration-300 hover:shadow-[var(--shadow-elevated)]',
         className,
