@@ -61,8 +61,8 @@ export default function LearnMorePage() {
         <section className="mt-14 grid gap-8 sm:grid-cols-2">
           <Card
             label="About"
-            title="What is Nova?"
-            description="Nova is your AI-powered reading room — blending classic book aesthetics with intelligent study tools for long, comfortable learning sessions."
+            title="What is Sambisono?"
+            description="Sambisono is your AI-powered reading room — blending classic book aesthetics with intelligent study tools for long, comfortable learning sessions."
             categories={['Library', 'AI', 'Study']}
           />
 
