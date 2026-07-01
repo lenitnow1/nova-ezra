@@ -33,7 +33,7 @@ export default function Header({ headerRef }) {
             <span className="font-display text-lg font-bold text-gold">N</span>
           </div>
           <span className="font-display text-lg font-semibold tracking-[0.12em] uppercase text-ivory/90 group-hover:text-gold transition-colors duration-300">
-            Nova
+            SambiSono
           </span>
         </Link>
 
