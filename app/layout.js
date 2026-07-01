@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Nova — Your Private Digital Library",
+  title: "SambiSono — Your Private Document Analyser",
   description:
     "An AI-powered reading room. Transform documents into interactive, scholarly lessons.",
 };
