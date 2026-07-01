@@ -8,37 +8,37 @@ const MOBILE_BREAKPOINT = 768;
 
 const cardData = [
   {
-    color: '#1F00D1',
+    color: '#F2D09D',
     title: 'Analytics',
     description: 'Strengths & weaknesses',
     label: 'library Insights'
   },
   {
-    color: '#CA07CA',
+    color: '#F2D09D',
     title: 'Improvement progress',
     description: 'Centralized data view',
     label: 'Reading Dashboard'
   },
   {
-    color: '6F00FF',
+    color: 'F2D09D',
     title: 'Collaboration',
-    description: 'How recruiters critique the resume',
-    label: 'Recruiter View'
+    description: 'Work with a personalised AI mentor',
+    label: 'Team Work'
   },
   {
     color: '000000',
-    title: 'Automation',
-    description: 'Keyword optimization',
-    label: ' Optimization Enginecy'
+    title: 'Automated learning',
+    description: 'Comprehension of lessons guaranteed',
+    label: ' Fast learning'
   },
   {
     color: '',
     title: 'Integration',
-    description: 'Industry trends',
-    label: 'Job Market Data'
+    description: 'Academic trends',
+    label: 'Extensive Data'
   },
   {
-    color: 'purple',
+    color: 'F2D09D',
     title: 'Security',
     description: 'Local processing / secure deletion',
     label: 'Privacy First'
