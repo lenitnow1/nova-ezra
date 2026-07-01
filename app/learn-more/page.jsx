@@ -54,7 +54,7 @@ export default function LearnMorePage() {
           data-anim="intro"
           className="mt-5 text-sepia max-w-2xl font-body leading-relaxed"
         >
-          Discover how Nova transforms documents into scholarly, interactive lessons — a modern
+          Discover how SambiSono transforms documents into scholarly, interactive lessons — a modern
           knowledge archive with the warmth of a private library.
         </p>
 
