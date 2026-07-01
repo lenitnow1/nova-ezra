@@ -8,19 +8,19 @@ const MOBILE_BREAKPOINT = 768;
 
 const cardData = [
   {
-    color: '#F2D09D',
+    color: '000000',
     title: 'Analytics',
     description: 'Strengths & weaknesses',
     label: 'library Insights'
   },
   {
-    color: '#F2D09D',
+    color: '000000',
     title: 'Improvement progress',
     description: 'Centralized data view',
     label: 'Reading Dashboard'
   },
   {
-    color: 'F2D09D',
+    color: '000000',
     title: 'Collaboration',
     description: 'Work with a personalised AI mentor',
     label: 'Team Work'
@@ -32,13 +32,13 @@ const cardData = [
     label: ' Fast learning'
   },
   {
-    color: '',
+    color: '000000',
     title: 'Integration',
     description: 'Academic trends',
     label: 'Extensive Data'
   },
   {
-    color: 'F2D09D',
+    color: '000000',
     title: 'Security',
     description: 'Local processing / secure deletion',
     label: 'Privacy First'
